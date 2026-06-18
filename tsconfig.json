@@ -20,5 +20,13 @@
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true
   },
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts"],
+  "references": [
+    {
+      "path": "./projects/market-watch-frontend/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/market-watch-frontend/tsconfig.spec.json"
+    }
+  ]
 }
