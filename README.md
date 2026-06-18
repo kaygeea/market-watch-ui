@@ -1,6 +1,12 @@
-# MarketWatchUi
+# Market Watch UI
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.0.3.
+This projects contains the entire user interface surfaces of the Market Watch platform.
+
+## Requirements
+
+- Bun v1.3.14
+- Angular v22.0.2
+- Angular CLI v22.0.3
 
 ## Development server
 
