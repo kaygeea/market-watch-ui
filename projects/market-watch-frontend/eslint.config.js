@@ -2,7 +2,7 @@
 import { defineConfig } from 'eslint/config';
 import rootConfig from '../../eslint.config.mts';
 
-module.exports = defineConfig([
+export default defineConfig([
   ...rootConfig,
   {
     files: ['**/*.ts'],
