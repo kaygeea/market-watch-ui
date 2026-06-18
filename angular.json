@@ -2,9 +2,10 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "cli": {
-    "packageManager": "bun"
+    "packageManager": "bun",
+    "analytics": "f3bbed06-59ae-4648-bdae-b21b7810797d",
+    "schematicCollections": ["angular-eslint"]
   },
   "newProjectRoot": "projects",
-  "projects": {
-  }
+  "projects": {}
 }
