@@ -41,7 +41,7 @@
       },
       "root": "projects/market-watch-frontend",
       "sourceRoot": "projects/market-watch-frontend/src",
-      "prefix": "mw-fe",
+      "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular/build:application",
@@ -54,7 +54,10 @@
                 "input": "projects/market-watch-frontend/public"
               }
             ],
-            "styles": ["projects/market-watch-frontend/src/styles.css"]
+            "styles": [
+              "projects/market-watch-frontend/src/material-theme.scss",
+              "projects/market-watch-frontend/src/styles.css"
+            ]
           },
           "configurations": {
             "production": {
