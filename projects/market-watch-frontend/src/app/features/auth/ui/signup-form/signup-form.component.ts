@@ -1,5 +1,5 @@
 import { Component, input, output, signal } from '@angular/core';
-import { form, FormField, maxLength, minLength, PathKind, pattern, required, SchemaPath, validate } from '@angular/forms/signals';
+import { email, form, FormField, maxLength, minLength, PathKind, pattern, required, SchemaPath, validate } from '@angular/forms/signals';
 
 /**
  * Mirrors `RegisterNewUserRequestDto` (market-watch-api, IAM module) field
@@ -8,10 +8,10 @@ import { form, FormField, maxLength, minLength, PathKind, pattern, required, Sch
  * When `data/` is built, reconcile this with the real DTO import instead
  * of duplicating it further.
  */
-export interface SignupFormValue {
+export interface SignupFormData {
   firstName: string;
   lastName: string;
-  middleName: string | null;
+  middleName: string;
   email: string;
   phoneNumber: string;
   street: string;
@@ -19,7 +19,7 @@ export interface SignupFormValue {
   ward: string;
   localGovernment: string;
   state: string;
-  zipCode: string | null;
+  zipCode: string;
   country: string;
   password: string;
 }
@@ -30,10 +30,10 @@ export interface AuthServerError {
   message: string;
 }
  
-const EMPTY_SIGNUP_FORM_VALUE: SignupFormValue = {
+const EMPTY_SIGNUP_FORM_VALUE: SignupFormData = {
   firstName: '',
   lastName: '',
-  middleName: null,
+  middleName: '',
   email: '',
   phoneNumber: '',
   street: '',
@@ -41,7 +41,7 @@ const EMPTY_SIGNUP_FORM_VALUE: SignupFormValue = {
   ward: '',
   localGovernment: '',
   state: '',
-  zipCode: null,
+  zipCode: '',
   country: '',
   password: '',
 };
@@ -55,8 +55,8 @@ const EMPTY_SIGNUP_FORM_VALUE: SignupFormValue = {
 export class SignupForm {
   readonly submitting = input<boolean>(false);
   readonly serverError = input<AuthServerError | null>(null);
-  readonly formSubmit = output<SignupFormValue>();
-  protected readonly signupModel = signal<SignupFormValue>({ ...EMPTY_SIGNUP_FORM_VALUE });
+  readonly formSubmit = output<SignupFormData>();
+  protected readonly signupModel = signal<SignupFormData>({ ...EMPTY_SIGNUP_FORM_VALUE });
 
   protected readonly signupForm = form(this.signupModel, (path) => {
     required(path.firstName, { message: 'First name is required' });
@@ -80,7 +80,7 @@ export class SignupForm {
     }
  
     required(path.email, { message: 'Email is required' });
-    pattern(path.email, /^[^\s@]+@[^\s@]+\.[^\s@]+$/, { message: 'Enter a valid email address' });
+    email(path.email, { message: 'Enter a valid email address' })
  
     required(path.phoneNumber, { message: 'Phone number is required' });
     // Loose UX check only — full en-NG mobile number validation happens server-side.
@@ -116,6 +116,7 @@ export class SignupForm {
     if (!this.signupForm().valid()) {
       return;
     }
-    this.formSubmit.emit(this.model());
+    console.log(`Submitting form data: ${JSON.stringify(this.signupModel(), null, 2)}`);
+    this.formSubmit.emit(this.signupModel());
   }
 }

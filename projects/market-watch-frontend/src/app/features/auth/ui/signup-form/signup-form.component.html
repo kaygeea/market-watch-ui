@@ -1,15 +1,25 @@
 <form novalidate (submit)="onSubmit($event)" class="flex flex-col gap-5">
   @if (serverError(); as error) {
-    <div class="rounded-md border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-800" role="alert">
+    <div
+      class="rounded-md border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-800"
+      role="alert"
+    >
       {{ error.message }}
     </div>
   }
 
   <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
     <div class="flex flex-col gap-1">
-      <label for="firstName" class="text-sm font-medium text-slate-700">First name</label>
-      <input id="firstName" type="text" [formField]="signupForm.firstName"
-             class="rounded-md border border-slate-300 px-3 py-2" />
+      <label for="firstName" class="text-sm font-medium text-slate-700">First name<span aria-hidden="true" align-super text-xs text-red-600>*</span></label>
+      <input
+        id="firstName"
+        type="text"
+        autocomplete="given-name"
+        aria-autocomplete="inline"
+        aria-required="true"
+        [formField]="signupForm.firstName"
+        class="rounded-md border border-slate-300 px-3 py-2"
+      />
       @if (signupForm.firstName().touched() && signupForm.firstName().invalid()) {
         <ul class="text-sm text-red-600">
           @for (error of signupForm.firstName().errors(); track error.kind) {
@@ -20,9 +30,16 @@
     </div>
 
     <div class="flex flex-col gap-1">
-      <label for="lastName" class="text-sm font-medium text-slate-700">Last name</label>
-      <input id="lastName" type="text" [formField]="signupForm.lastName"
-             class="rounded-md border border-slate-300 px-3 py-2" />
+      <label for="lastName" class="text-sm font-medium text-slate-700">Last name<span aria-hidden="true" align-super text-xs text-red-600>*</span></label>
+      <input
+        id="lastName"
+        type="text"
+        autocomplete="family-name"
+        aria-autocomplete="inline"
+        aria-required="true"
+        [formField]="signupForm.lastName"
+        class="rounded-md border border-slate-300 px-3 py-2"
+      />
       @if (signupForm.lastName().touched() && signupForm.lastName().invalid()) {
         <ul class="text-sm text-red-600">
           @for (error of signupForm.lastName().errors(); track error.kind) {
@@ -34,9 +51,18 @@
   </div>
 
   <div class="flex flex-col gap-1">
-    <label for="middleName" class="text-sm font-medium text-slate-700">Middle name (optional)</label>
-    <input id="middleName" type="text" [formField]="signupForm.middleName"
-           class="rounded-md border border-slate-300 px-3 py-2" />
+    <label for="middleName" class="text-sm font-medium text-slate-700"
+      >Middle name (optional)</label
+    >
+    <input
+      id="middleName"
+      type="text"
+      autocomplete="additional-name"
+      aria-autocomplete="inline"
+      aria-required="false"
+      [formField]="signupForm.middleName"
+      class="rounded-md border border-slate-300 px-3 py-2"
+    />
     @if (signupForm.middleName().touched() && signupForm.middleName().invalid()) {
       <ul class="text-sm text-red-600">
         @for (error of signupForm.middleName().errors(); track error.kind) {
@@ -47,9 +73,16 @@
   </div>
 
   <div class="flex flex-col gap-1">
-    <label for="email" class="text-sm font-medium text-slate-700">Email</label>
-    <input id="email" type="email" [formField]="signupForm.email"
-           class="rounded-md border border-slate-300 px-3 py-2" />
+    <label for="email" class="text-sm font-medium text-slate-700">Email<span aria-hidden="true" align-super text-xs text-red-600>*</span></label>
+    <input
+      id="email"
+      type="email"
+      autocomplete="email"
+      aria-autocomplete="inline"
+      aria-required="true"
+      [formField]="signupForm.email"
+      class="rounded-md border border-slate-300 px-3 py-2"
+    />
     @if (signupForm.email().touched() && signupForm.email().invalid()) {
       <ul class="text-sm text-red-600">
         @for (error of signupForm.email().errors(); track error.kind) {
@@ -60,9 +93,17 @@
   </div>
 
   <div class="flex flex-col gap-1">
-    <label for="phoneNumber" class="text-sm font-medium text-slate-700">Phone number</label>
-    <input id="phoneNumber" type="tel" [formField]="signupForm.phoneNumber"
-           class="rounded-md border border-slate-300 px-3 py-2" />
+    <label for="phoneNumber" class="text-sm font-medium text-slate-700"
+      >Phone number<span align-super text-xs text-red-600>*</span></label>
+    <input
+      id="phoneNumber"
+      type="tel"
+      autocomplete="tel-country-code"
+      aria-autocomplete="inline"
+      aria-required="true"
+      [formField]="signupForm.phoneNumber"
+      class="rounded-md border border-slate-300 px-3 py-2"
+    />
     @if (signupForm.phoneNumber().touched() && signupForm.phoneNumber().invalid()) {
       <ul class="text-sm text-red-600">
         @for (error of signupForm.phoneNumber().errors(); track error.kind) {
@@ -73,9 +114,16 @@
   </div>
 
   <div class="flex flex-col gap-1">
-    <label for="street" class="text-sm font-medium text-slate-700">Street</label>
-    <input id="street" type="text" [formField]="signupForm.street"
-           class="rounded-md border border-slate-300 px-3 py-2" />
+    <label for="street" class="text-sm font-medium text-slate-700">Street<span aria-hidden="true" align-super text-xs text-red-600>*</span></label>
+    <input
+      id="street"
+      type="text"
+      autocomplete="address-line1"
+      aria-autocomplete="inline"
+      aria-required="true"
+      [formField]="signupForm.street"
+      class="rounded-md border border-slate-300 px-3 py-2"
+    />
     @if (signupForm.street().touched() && signupForm.street().invalid()) {
       <ul class="text-sm text-red-600">
         @for (error of signupForm.street().errors(); track error.kind) {
@@ -87,9 +135,16 @@
 
   <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
     <div class="flex flex-col gap-1">
-      <label for="city" class="text-sm font-medium text-slate-700">City</label>
-      <input id="city" type="text" [formField]="signupForm.city"
-             class="rounded-md border border-slate-300 px-3 py-2" />
+      <label for="city" class="text-sm font-medium text-slate-700">City<span aria-hidden="true" align-super text-xs text-red-600>*</span></label>
+      <input
+        id="city"
+        type="text"
+        autocomplete="address-level3"
+        aria-autocomplete="inline"
+        aria-required="true"
+        [formField]="signupForm.city"
+        class="rounded-md border border-slate-300 px-3 py-2"
+      />
       @if (signupForm.city().touched() && signupForm.city().invalid()) {
         <ul class="text-sm text-red-600">
           @for (error of signupForm.city().errors(); track error.kind) {
@@ -101,17 +156,35 @@
 
     <div class="flex flex-col gap-1">
       <label for="ward" class="text-sm font-medium text-slate-700">Ward (optional)</label>
-      <input id="ward" type="text" [formField]="signupForm.ward"
-             class="rounded-md border border-slate-300 px-3 py-2" />
+      <input
+        id="ward"
+        type="text"
+        autocomplete="address-line2"
+        aria-autocomplete="inline"
+        aria-required="true"
+        [formField]="signupForm.ward"
+        class="rounded-md border border-slate-300 px-3 py-2"
+      />
     </div>
   </div>
 
   <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
     <div class="flex flex-col gap-1">
-      <label for="localGovernment" class="text-sm font-medium text-slate-700">Local government</label>
-      <input id="localGovernment" type="text" [formField]="signupForm.localGovernment"
-             class="rounded-md border border-slate-300 px-3 py-2" />
-      @if (signupForm.localGovernment().touched() && signupForm.localGovernment().invalid()) {
+      <label for="localGovernment" class="text-sm font-medium text-slate-700"
+        >Local government<span align-super text-xs text-red-600>*</span></label
+      >
+      <input
+        id="localGovernment"
+        type="text"
+        autocomplete="address-level2"
+        aria-autocomplete="inline"
+        aria-required="true"
+        [formField]="signupForm.localGovernment"
+        class="rounded-md border border-slate-300 px-3 py-2"
+      />
+      @if (
+        signupForm.localGovernment().touched() && signupForm.localGovernment().invalid()
+      ) {
         <ul class="text-sm text-red-600">
           @for (error of signupForm.localGovernment().errors(); track error.kind) {
             <li>{{ error.message }}</li>
@@ -121,9 +194,16 @@
     </div>
 
     <div class="flex flex-col gap-1">
-      <label for="state" class="text-sm font-medium text-slate-700">State</label>
-      <input id="state" type="text" [formField]="signupForm.state"
-             class="rounded-md border border-slate-300 px-3 py-2" />
+      <label for="state" class="text-sm font-medium text-slate-700">State<span aria-hidden="true" align-super text-xs text-red-600>*</span></label>
+      <input
+        id="state"
+        type="text"
+        autocomplete="address-level1"
+        aria-autocomplete="inline"
+        aria-required="true"
+        [formField]="signupForm.state"
+        class="rounded-md border border-slate-300 px-3 py-2"
+      />
       @if (signupForm.state().touched() && signupForm.state().invalid()) {
         <ul class="text-sm text-red-600">
           @for (error of signupForm.state().errors(); track error.kind) {
@@ -136,15 +216,31 @@
 
   <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
     <div class="flex flex-col gap-1">
-      <label for="zipCode" class="text-sm font-medium text-slate-700">Zip code (optional)</label>
-      <input id="zipCode" type="text" inputmode="numeric" [formField]="signupForm.zipCode"
-             class="rounded-md border border-slate-300 px-3 py-2" />
+      <label for="zipCode" class="text-sm font-medium text-slate-700"
+        >Zip code (optional)</label
+      >
+      <input
+        id="zipCode"
+        type="text"
+        inputmode="numeric"
+        aria-autocomplete="inline"
+        aria-required="false"
+        [formField]="signupForm.zipCode"
+        class="rounded-md border border-slate-300 px-3 py-2"
+      />
     </div>
 
     <div class="flex flex-col gap-1">
-      <label for="country" class="text-sm font-medium text-slate-700">Country</label>
-      <input id="country" type="text" [formField]="signupForm.country"
-             class="rounded-md border border-slate-300 px-3 py-2" />
+      <label for="country" class="text-sm font-medium text-slate-700">Country<span aria-hidden="true" align-super text-xs text-red-600>*</span></label>
+      <input
+        id="country"
+        type="text"
+        autocomplete="country-name"
+        aria-autocomplete="inline"
+        aria-required="true"
+        [formField]="signupForm.country"
+        class="rounded-md border border-slate-300 px-3 py-2"
+      />
       @if (signupForm.country().touched() && signupForm.country().invalid()) {
         <ul class="text-sm text-red-600">
           @for (error of signupForm.country().errors(); track error.kind) {
@@ -156,9 +252,16 @@
   </div>
 
   <div class="flex flex-col gap-1">
-    <label for="password" class="text-sm font-medium text-slate-700">Password</label>
-    <input id="password" type="password" [formField]="signupForm.password"
-           class="rounded-md border border-slate-300 px-3 py-2" />
+    <label for="password" class="text-sm font-medium text-slate-700">Password<span aria-hidden="true" align-super text-xs text-red-600>*</span></label>
+    <input
+      id="password"
+      type="password"
+      autocomplete="address-level3"
+      aria-autocomplete="inline"
+      aria-required="true"
+      [formField]="signupForm.password"
+      class="rounded-md border border-slate-300 px-3 py-2"
+    />
     @if (signupForm.password().touched() && signupForm.password().invalid()) {
       <ul class="text-sm text-red-600">
         @for (error of signupForm.password().errors(); track error.kind) {
