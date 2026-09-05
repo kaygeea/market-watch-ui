@@ -1,5 +1,6 @@
 import { Component, input, output, signal } from '@angular/core';
 import { email, form, FormField, pattern, required } from '@angular/forms/signals';
+import { RouterLink } from "@angular/router";
 
 /** Matches the login request shape (no formal DTO provided in source material). */
 export interface SigninFormData {
@@ -20,7 +21,7 @@ export interface AuthServerError {
 
 @Component({
   selector: 'app-signin-form',
-  imports: [FormField],
+  imports: [FormField, RouterLink],
   templateUrl: './signin-form.component.html',
   styleUrl: './signin-form.component.css',
 })

@@ -50,6 +50,9 @@
     }
   </div>
 
+  <!-- Create account -->
+  <p>Don't have an account? <a routerLink="/auth/signup">Create account</a></p>
+
   <button
     type="submit"
     [disabled]="!signinForm().valid() || submitting()"
