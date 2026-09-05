@@ -5,19 +5,24 @@
  * When `data/` is built, reconcile this with the real DTO import instead
  * of duplicating it further.
  */
+
+export interface SignupAddress {
+  country: string;
+  state: string;
+  localGovernment: string;
+  ward: string;
+  city: string;
+  street: string;
+  zipCode: string;
+}
+
 export interface SignupFormData {
   firstName: string;
   lastName: string;
   middleName: string;
   email: string;
   phoneNumber: string;
-  street: string;
-  city: string;
-  ward: string;
-  localGovernment: string;
-  state: string;
-  zipCode: string;
-  country: string;
+  address: SignupAddress
   password: string;
 }
 

@@ -9,13 +9,15 @@ const EMPTY_SIGNUP_FORM_VALUE: SignupFormData = {
   middleName: '',
   email: '',
   phoneNumber: '',
-  street: '',
-  city: '',
-  ward: '',
-  localGovernment: '',
-  state: '',
-  zipCode: '',
-  country: 'Nigeria',
+  address: {
+    country: 'Nigeria',
+    state: '',
+    localGovernment: '',
+    ward: '',
+    city: '',
+    street: '',
+    zipCode: '',
+  },
   password: '',
 };
 
@@ -47,7 +49,7 @@ export class SignupForm {
 
   constructor() {
     effect(() => {
-      const state = this.signupForm.state().value();
+      const state = this.signupForm.address.state().value();
       const previousState = this.lastSelectedState();
 
       if (!state || state === previousState) {
@@ -56,12 +58,12 @@ export class SignupForm {
 
       this.lastSelectedState.set(state);
       this.stateSelected.emit(state);
-      this.signupForm.localGovernment().value.set('');
-      this.signupForm.ward().value.set('');
+      this.signupForm.address.localGovernment().value.set('');
+      this.signupForm.address.ward().value.set('');
     });
 
     effect(() => {
-      const localGovernment = this.signupForm.localGovernment().value();
+      const localGovernment = this.signupForm.address.localGovernment().value();
       const previousLocalGovernment = this.lastSelectedLocalGovernment();
 
       if (!localGovernment || localGovernment === previousLocalGovernment) {
@@ -70,7 +72,7 @@ export class SignupForm {
 
       this.lastSelectedLocalGovernment.set(localGovernment);
       this.localGovernmentSelected.emit(localGovernment);
-      this.signupForm.ward().value.set('');
+      this.signupForm.address.ward().value.set('');
     });
   }
 
@@ -102,19 +104,19 @@ export class SignupForm {
     // Loose UX check only — full en-NG mobile number validation happens server-side.
     minLength(path.phoneNumber, 10, { message: 'Enter a valid phone number' });
  
-    required(path.street, { message: 'Street is required' });
-    required(path.city, { message: 'City is required' });
-    required(path.state, { message: 'State is required' });
-    required(path.localGovernment, { message: 'Local government is required' });
-    required(path.ward, { message: 'Ward is required' });
-    required(path.country, { message: 'Country is required' });
-    readonly(path.country)
+    required(path.address.street, { message: 'Street is required' });
+    required(path.address.city, { message: 'City is required' });
+    required(path.address.state, { message: 'State is required' });
+    required(path.address.localGovernment, { message: 'Local government is required' });
+    required(path.address.ward, { message: 'Ward is required' });
+    required(path.address.country, { message: 'Country is required' });
+    readonly(path.address.country)
 
-    disabled(path.localGovernment, {
+    disabled(path.address.localGovernment, {
       when: () => this.localGovernmentOptions().length === 0,
     });
 
-    disabled(path.ward, {
+    disabled(path.address.ward, {
       when: () => this.wardOptions().length === 0,
     });
 

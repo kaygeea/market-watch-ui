@@ -126,11 +126,11 @@
     <div class="flex flex-col gap-1">
       <label for="country" class="text-sm font-medium text-slate-700">Country<span aria-hidden="true" class="align-super text-xs text-red-600">*</span></label>
       <div id="country" class="w-full rounded-md border border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-700">
-        {{ signupForm.country().value() }}
+        {{ signupForm.address.country().value() }}
       </div>
-      @if (signupForm.country().touched() && signupForm.country().invalid()) {
+      @if (signupForm.address.country().touched() && signupForm.address.country().invalid()) {
         <ul class="text-sm text-red-600">
-          @for (error of signupForm.country().errors(); track error.kind) {
+          @for (error of signupForm.address.country().errors(); track error.kind) {
             <li>{{ error.message }}</li>
           }
         </ul>
@@ -141,7 +141,7 @@
       <label for="state" class="text-sm font-medium text-slate-700">State<span aria-hidden="true" class="align-super text-xs text-red-600">*</span></label>
       <select
         id="state"
-        [formField]="signupForm.state"
+        [formField]="signupForm.address.state"
         (focus)="stateFieldFocused.emit()"
         class="w-full rounded-md border border-slate-300 px-3 py-2"
       >
@@ -150,9 +150,9 @@
           <option [value]="state">{{ state }}</option>
         }
       </select>
-      @if (signupForm.state().touched() && signupForm.state().invalid()) {
+      @if (signupForm.address.state().touched() && signupForm.address.state().invalid()) {
         <ul class="text-sm text-red-600">
-          @for (error of signupForm.state().errors(); track error.kind) {
+          @for (error of signupForm.address.state().errors(); track error.kind) {
             <li>{{ error.message }}</li>
           }
         </ul>
@@ -168,7 +168,7 @@
       >
       <select
         id="localGovernment"
-        [formField]="signupForm.localGovernment"
+        [formField]="signupForm.address.localGovernment"
         class="w-full rounded-md border border-slate-300 px-3 py-2"
       >
         <option value="" disabled>{{ localGovernmentsLoading() ? 'Loading local governments…' : 'Select a local government' }}</option>
@@ -177,10 +177,10 @@
         }
       </select>
       @if (
-        signupForm.localGovernment().touched() && signupForm.localGovernment().invalid()
+        signupForm.address.localGovernment().touched() && signupForm.address.localGovernment().invalid()
       ) {
         <ul class="text-sm text-red-600">
-          @for (error of signupForm.localGovernment().errors(); track error.kind) {
+          @for (error of signupForm.address.localGovernment().errors(); track error.kind) {
             <li>{{ error.message }}</li>
           }
         </ul>
@@ -191,7 +191,7 @@
       <label for="ward" class="text-sm font-medium text-slate-700">Ward</label>
       <select
         id="ward"
-        [formField]="signupForm.ward"
+        [formField]="signupForm.address.ward"
         class="w-full rounded-md border border-slate-300 px-3 py-2"
       >
         @if (wardOptions().length === 0) {
@@ -205,9 +205,9 @@
           }
         }
       </select>
-      @if (signupForm.ward().touched() && signupForm.ward().invalid()) {
+      @if (signupForm.address.ward().touched() && signupForm.address.ward().invalid()) {
         <ul class="text-sm text-red-600">
-          @for (error of signupForm.ward().errors(); track error.kind) {
+          @for (error of signupForm.address.ward().errors(); track error.kind) {
             <li>{{ error.message }}</li>
           }
         </ul>
@@ -225,12 +225,12 @@
         autocomplete="address-level2"
         aria-autocomplete="inline"
         aria-required="true"
-        [formField]="signupForm.city"
+        [formField]="signupForm.address.city"
         class="w-full rounded-md border border-slate-300 px-3 py-2"
       />
-      @if (signupForm.city().touched() && signupForm.city().invalid()) {
+      @if (signupForm.address.city().touched() && signupForm.address.city().invalid()) {
         <ul class="text-sm text-red-600">
-          @for (error of signupForm.city().errors(); track error.kind) {
+          @for (error of signupForm.address.city().errors(); track error.kind) {
             <li>{{ error.message }}</li>
           }
         </ul>
@@ -245,12 +245,12 @@
         autocomplete="address-line1"
         aria-autocomplete="inline"
         aria-required="true"
-        [formField]="signupForm.street"
+        [formField]="signupForm.address.street"
         class="rounded-md border border-slate-300 px-3 py-2"
       />
-      @if (signupForm.street().touched() && signupForm.street().invalid()) {
+      @if (signupForm.address.street().touched() && signupForm.address.street().invalid()) {
         <ul class="text-sm text-red-600">
-          @for (error of signupForm.street().errors(); track error.kind) {
+          @for (error of signupForm.address.street().errors(); track error.kind) {
             <li>{{ error.message }}</li>
           }
         </ul>
@@ -268,9 +268,8 @@
         id="zipCode"
         type="text"
         inputmode="numeric"
-        aria-autocomplete="inline"
         aria-required="false"
-        [formField]="signupForm.zipCode"
+        [formField]="signupForm.address.zipCode"
         class="rounded-md border border-slate-300 px-3 py-2"
       />
     </div>
