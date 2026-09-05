@@ -1,34 +1,6 @@
-import { Component, input, output, signal } from '@angular/core';
-import { email, form, FormField, maxLength, minLength, PathKind, pattern, required, SchemaPath, validate } from '@angular/forms/signals';
-
-/**
- * Mirrors `RegisterNewUserRequestDto` (market-watch-api, IAM module) field
- * for field. This type is intentionally colocated here rather than in
- * `data/` — the DTO/mapper layer is deferred to the AuthStore session.
- * When `data/` is built, reconcile this with the real DTO import instead
- * of duplicating it further.
- */
-export interface SignupFormData {
-  firstName: string;
-  lastName: string;
-  middleName: string;
-  email: string;
-  phoneNumber: string;
-  street: string;
-  city: string;
-  ward: string;
-  localGovernment: string;
-  state: string;
-  zipCode: string;
-  country: string;
-  password: string;
-}
- 
-/** Shape the future `AuthStore` will populate from the API error envelope. */
-export interface AuthServerError {
-  name: string;
-  message: string;
-}
+import { Component, effect, input, output, signal } from '@angular/core';
+import { disabled, email, form, FormField, maxLength, minLength, PathKind, readonly, required, SchemaPath, validate } from '@angular/forms/signals';
+import { AuthServerError, SignupFormData } from './signup-form.interfaces';
  
 const EMPTY_SIGNUP_FORM_VALUE: SignupFormData = {
   firstName: '',
@@ -42,7 +14,7 @@ const EMPTY_SIGNUP_FORM_VALUE: SignupFormData = {
   localGovernment: '',
   state: '',
   zipCode: '',
-  country: '',
+  country: 'Nigeria',
   password: '',
 };
 
@@ -55,8 +27,46 @@ const EMPTY_SIGNUP_FORM_VALUE: SignupFormData = {
 export class SignupForm {
   readonly submitting = input<boolean>(false);
   readonly serverError = input<AuthServerError | null>(null);
+  readonly stateOptions = input<string[]>([]);
+  readonly statesLoading = input<boolean>(false);
+  readonly localGovernmentOptions = input<string[]>([]);
+  readonly localGovernmentsLoading = input<boolean>(false);
+  readonly wardOptions = input<string[]>([]);
+  readonly wardsLoading = input<boolean>(false);
+
+  readonly stateFieldFocused = output<void>();
+  readonly stateSelected = output<string>();
+  readonly localGovernmentSelected = output<string>();
   readonly formSubmit = output<SignupFormData>();
+
   protected readonly signupModel = signal<SignupFormData>({ ...EMPTY_SIGNUP_FORM_VALUE });
+
+  constructor() {
+    effect(() => {
+      const state = this.signupForm.state().value();
+
+      if (state) {
+        this.stateSelected.emit(state);
+        if (this.signupForm.localGovernment().value()) {
+          this.signupForm.localGovernment().value.set('');
+        }
+        if (this.signupForm.ward().value()) {
+          this.signupForm.ward().value.set('');
+        }
+      }
+    });
+
+    effect(() => {
+      const localGovernment = this.signupForm.localGovernment().value();
+
+      if (localGovernment) {
+        this.localGovernmentSelected.emit(localGovernment);
+        if (this.signupForm.ward().value()) {
+          this.signupForm.ward().value.set('');
+        }
+      }
+    });
+  }
 
   protected readonly signupForm = form(this.signupModel, (path) => {
     required(path.firstName, { message: 'First name is required' });
@@ -88,10 +98,20 @@ export class SignupForm {
  
     required(path.street, { message: 'Street is required' });
     required(path.city, { message: 'City is required' });
-    required(path.localGovernment, { message: 'Local government is required' });
     required(path.state, { message: 'State is required' });
+    required(path.localGovernment, { message: 'Local government is required' });
+    required(path.ward, { message: 'Ward is required' });
     required(path.country, { message: 'Country is required' });
- 
+    readonly(path.country)
+
+    disabled(path.localGovernment, {
+      when: () => this.localGovernmentOptions().length === 0,
+    });
+
+    disabled(path.ward, {
+      when: () => this.wardOptions().length === 0,
+    });
+
     required(path.password, { message: 'Password is required' });
     minLength(path.password, 8, { message: 'Password must be at least 8 characters' });
     validate(path.password, ({ value }) => {
