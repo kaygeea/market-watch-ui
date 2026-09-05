@@ -1,14 +1,19 @@
 import { Routes } from '@angular/router';
-import { App } from './app.component';
-import { SignupForm } from './features/auth/ui/signup-form/signup-form.component';
+import { SignupPage } from './features/auth/features/signup-page/signup-page.component';
+import { SigninPage } from './features/auth/features/signin-page/signin-page.component';
 
 export const routes: Routes = [
-  // {
-  //   path: '',
-  //   component: App
-  // },
   {
-    path: 'auth/signup',
-    component: SignupForm
+    path: 'auth',
+    children: [
+      {
+        path: 'signup',
+        component: SignupPage,
+      },
+      {
+        path: 'signin',
+        component: SigninPage,
+      }
+    ],
   }
 ];
