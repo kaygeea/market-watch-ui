@@ -1,0 +1,7 @@
+<section class="mx-auto w-full max-w-md">
+  <app-signin-form
+    [submitting]="submitting()"
+    [serverError]="serverError()"
+    (formSubmit)="onSigninSubmit($event)"
+  />
+</section>
