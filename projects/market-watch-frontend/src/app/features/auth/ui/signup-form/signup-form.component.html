@@ -75,91 +75,93 @@
     }
   </div>
 
-  <!-- Email -->
-  <div class="flex flex-col gap-1">
-    <label for="email" class="text-sm font-medium text-slate-700">Email<span aria-hidden="true" class="align-super text-xs text-red-600">*</span></label>
-    <input
-      id="email"
-      type="email"
-      autocomplete="email"
-      aria-autocomplete="inline"
-      aria-required="true"
-      [formField]="signupForm.email"
-      class="rounded-md border border-slate-300 px-3 py-2"
-    />
-    @if (signupForm.email().touched() && signupForm.email().invalid()) {
-      <ul class="text-sm text-red-600">
-        @for (error of signupForm.email().errors(); track error.kind) {
-          <li>{{ error.message }}</li>
-        }
-      </ul>
-    }
-  </div>
+  <!-- Email and phone number -->
+  <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+    <div class="flex flex-col gap-1">
+      <label for="email" class="text-sm font-medium text-slate-700">Email<span aria-hidden="true" class="align-super text-xs text-red-600">*</span></label>
+      <input
+        id="email"
+        type="email"
+        autocomplete="email"
+        aria-autocomplete="inline"
+        aria-required="true"
+        [formField]="signupForm.email"
+        class="rounded-md border border-slate-300 px-3 py-2"
+      />
+      @if (signupForm.email().touched() && signupForm.email().invalid()) {
+        <ul class="text-sm text-red-600">
+          @for (error of signupForm.email().errors(); track error.kind) {
+            <li>{{ error.message }}</li>
+          }
+        </ul>
+      }
+    </div>
 
-  <!-- Phone number -->
-  <div class="flex flex-col gap-1">
-    <label for="phoneNumber" class="text-sm font-medium text-slate-700"
-      >Phone number<span class="align-super text-xs text-red-600">*</span></label>
-    <input
-      id="phoneNumber"
-      type="tel"
-      autocomplete="tel"
-      aria-autocomplete="inline"
-      aria-required="true"
-      [formField]="signupForm.phoneNumber"
-      class="rounded-md border border-slate-300 px-3 py-2"
-    />
-    @if (signupForm.phoneNumber().touched() && signupForm.phoneNumber().invalid()) {
-      <ul class="text-sm text-red-600">
-        @for (error of signupForm.phoneNumber().errors(); track error.kind) {
-          <li>{{ error.message }}</li>
-        }
-      </ul>
-    }
+    <div class="flex flex-col gap-1">
+      <label for="phoneNumber" class="text-sm font-medium text-slate-700"
+        >Phone number<span class="align-super text-xs text-red-600">*</span></label>
+      <input
+        id="phoneNumber"
+        type="tel"
+        autocomplete="tel"
+        aria-autocomplete="inline"
+        aria-required="true"
+        [formField]="signupForm.phoneNumber"
+        class="rounded-md border border-slate-300 px-3 py-2"
+      />
+      @if (signupForm.phoneNumber().touched() && signupForm.phoneNumber().invalid()) {
+        <ul class="text-sm text-red-600">
+          @for (error of signupForm.phoneNumber().errors(); track error.kind) {
+            <li>{{ error.message }}</li>
+          }
+        </ul>
+      }
+    </div>
   </div>
 
   <!-- Address start -->
 
-  <!-- Country -->
-  <div class="flex flex-col gap-1">
-    <label for="country" class="text-sm font-medium text-slate-700">Country<span aria-hidden="true" class="align-super text-xs text-red-600">*</span></label>
-    <div id="country" class="w-full rounded-md border border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-700">
-      {{ signupForm.country().value() }}
-    </div>
-    @if (signupForm.country().touched() && signupForm.country().invalid()) {
-      <ul class="text-sm text-red-600">
-        @for (error of signupForm.country().errors(); track error.kind) {
-          <li>{{ error.message }}</li>
-        }
-      </ul>
-    }
-  </div>
-
-  <!-- State -->
-  <div class="flex flex-col gap-1">
-    <label for="state" class="text-sm font-medium text-slate-700">State<span aria-hidden="true" class="align-super text-xs text-red-600">*</span></label>
-    <select
-      id="state"
-      [formField]="signupForm.state"
-      (focus)="stateFieldFocused.emit()"
-      class="w-full rounded-md border border-slate-300 px-3 py-2"
-    >
-      <option value="" disabled>{{ statesLoading() ? 'Loading states…' : 'Select a state' }}</option>
-      @for (state of stateOptions(); track state) {
-        <option [value]="state">{{ state }}</option>
+  <!-- Country and state -->
+  <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+    <div class="flex flex-col gap-1">
+      <label for="country" class="text-sm font-medium text-slate-700">Country<span aria-hidden="true" class="align-super text-xs text-red-600">*</span></label>
+      <div id="country" class="w-full rounded-md border border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-700">
+        {{ signupForm.country().value() }}
+      </div>
+      @if (signupForm.country().touched() && signupForm.country().invalid()) {
+        <ul class="text-sm text-red-600">
+          @for (error of signupForm.country().errors(); track error.kind) {
+            <li>{{ error.message }}</li>
+          }
+        </ul>
       }
-    </select>
-    @if (signupForm.state().touched() && signupForm.state().invalid()) {
-      <ul class="text-sm text-red-600">
-        @for (error of signupForm.state().errors(); track error.kind) {
-          <li>{{ error.message }}</li>
+    </div>
+
+    <div class="flex flex-col gap-1">
+      <label for="state" class="text-sm font-medium text-slate-700">State<span aria-hidden="true" class="align-super text-xs text-red-600">*</span></label>
+      <select
+        id="state"
+        [formField]="signupForm.state"
+        (focus)="stateFieldFocused.emit()"
+        class="w-full rounded-md border border-slate-300 px-3 py-2"
+      >
+        <option value="" disabled>{{ statesLoading() ? 'Loading states…' : 'Select a state' }}</option>
+        @for (state of stateOptions(); track state) {
+          <option [value]="state">{{ state }}</option>
         }
-      </ul>
-    }
+      </select>
+      @if (signupForm.state().touched() && signupForm.state().invalid()) {
+        <ul class="text-sm text-red-600">
+          @for (error of signupForm.state().errors(); track error.kind) {
+            <li>{{ error.message }}</li>
+          }
+        </ul>
+      }
+    </div>
   </div>
 
-  <!-- Local government -->
-  <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+  <!-- Local government and ward -->
+  <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
     <div class="flex flex-col gap-1">
       <label for="localGovernment" class="text-sm font-medium text-slate-700"
         >Local government<span class="align-super text-xs text-red-600">*</span></label
@@ -184,38 +186,37 @@
         </ul>
       }
     </div>
-  </div>
 
-  <!-- Ward -->
-  <div class="flex flex-col gap-1">
-    <label for="ward" class="text-sm font-medium text-slate-700">Ward<span aria-hidden="true" class="align-super text-xs text-red-600">*</span></label>
-    <select
-      id="ward"
-      [formField]="signupForm.ward"
-      class="w-full rounded-md border border-slate-300 px-3 py-2"
-    >
-      @if (wardOptions().length === 0) {
-        <option value="" disabled>
-          {{ wardsLoading() ? 'Loading wards…' : 'No wards available for this local government yet' }}
-        </option>
-      } @else {
-        <option value="" disabled>{{ wardsLoading() ? 'Loading wards…' : 'Select a ward' }}</option>
-        @for (ward of wardOptions(); track ward) {
-          <option [value]="ward">{{ ward }}</option>
+    <div class="flex flex-col gap-1">
+      <label for="ward" class="text-sm font-medium text-slate-700">Ward<span aria-hidden="true" class="align-super text-xs text-red-600">*</span></label>
+      <select
+        id="ward"
+        [formField]="signupForm.ward"
+        class="w-full rounded-md border border-slate-300 px-3 py-2"
+      >
+        @if (wardOptions().length === 0) {
+          <option value="Test Ward" disabled>
+            {{ wardsLoading() ? 'Loading wards…' : 'No wards available for this local government yet' }}
+          </option>
+        } @else {
+          <option value="" disabled>{{ wardsLoading() ? 'Loading wards…' : 'Select a ward' }}</option>
+          @for (ward of wardOptions(); track ward) {
+            <option [value]="ward">{{ ward }}</option>
+          }
         }
+      </select>
+      @if (signupForm.ward().touched() && signupForm.ward().invalid()) {
+        <ul class="text-sm text-red-600">
+          @for (error of signupForm.ward().errors(); track error.kind) {
+            <li>{{ error.message }}</li>
+          }
+        </ul>
       }
-    </select>
-    @if (signupForm.ward().touched() && signupForm.ward().invalid()) {
-      <ul class="text-sm text-red-600">
-        @for (error of signupForm.ward().errors(); track error.kind) {
-          <li>{{ error.message }}</li>
-        }
-      </ul>
-    }
+    </div>
   </div>
 
-  <!-- City -->
-  <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+  <!-- City and street -->
+  <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
     <div class="flex flex-col gap-1">
       <label for="city" class="text-sm font-medium text-slate-700">City<span aria-hidden="true" class="align-super text-xs text-red-600">*</span></label>
       <input
@@ -235,27 +236,26 @@
         </ul>
       }
     </div>
-  </div>
 
-  <!-- Street -->
-  <div class="flex flex-col gap-1">
-    <label for="street" class="text-sm font-medium text-slate-700">Street<span aria-hidden="true" class="align-super text-xs text-red-600">*</span></label>
-    <input
-      id="street"
-      type="text"
-      autocomplete="address-line1"
-      aria-autocomplete="inline"
-      aria-required="true"
-      [formField]="signupForm.street"
-      class="rounded-md border border-slate-300 px-3 py-2"
-    />
-    @if (signupForm.street().touched() && signupForm.street().invalid()) {
-      <ul class="text-sm text-red-600">
-        @for (error of signupForm.street().errors(); track error.kind) {
-          <li>{{ error.message }}</li>
-        }
-      </ul>
-    }
+    <div class="flex flex-col gap-1">
+      <label for="street" class="text-sm font-medium text-slate-700">Street<span aria-hidden="true" class="align-super text-xs text-red-600">*</span></label>
+      <input
+        id="street"
+        type="text"
+        autocomplete="address-line1"
+        aria-autocomplete="inline"
+        aria-required="true"
+        [formField]="signupForm.street"
+        class="rounded-md border border-slate-300 px-3 py-2"
+      />
+      @if (signupForm.street().touched() && signupForm.street().invalid()) {
+        <ul class="text-sm text-red-600">
+          @for (error of signupForm.street().errors(); track error.kind) {
+            <li>{{ error.message }}</li>
+          }
+        </ul>
+      }
+    </div>
   </div>
 
   <!-- Zip code (optional) -->
