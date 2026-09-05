@@ -8,9 +8,10 @@
     </div>
   }
 
+  <!-- First name -->
   <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
     <div class="flex flex-col gap-1">
-      <label for="firstName" class="text-sm font-medium text-slate-700">First name<span aria-hidden="true" align-super text-xs text-red-600>*</span></label>
+      <label for="firstName" class="text-sm font-medium text-slate-700">First name<span aria-hidden="true" class="align-super text-xs text-red-600">*</span></label>
       <input
         id="firstName"
         type="text"
@@ -29,8 +30,9 @@
       }
     </div>
 
+    <!-- Last name -->
     <div class="flex flex-col gap-1">
-      <label for="lastName" class="text-sm font-medium text-slate-700">Last name<span aria-hidden="true" align-super text-xs text-red-600>*</span></label>
+      <label for="lastName" class="text-sm font-medium text-slate-700">Last name<span aria-hidden="true" class="align-super text-xs text-red-600">*</span></label>
       <input
         id="lastName"
         type="text"
@@ -50,6 +52,7 @@
     </div>
   </div>
 
+  <!-- Middle name (optional) -->
   <div class="flex flex-col gap-1">
     <label for="middleName" class="text-sm font-medium text-slate-700"
       >Middle name (optional)</label
@@ -72,8 +75,9 @@
     }
   </div>
 
+  <!-- Email -->
   <div class="flex flex-col gap-1">
-    <label for="email" class="text-sm font-medium text-slate-700">Email<span aria-hidden="true" align-super text-xs text-red-600>*</span></label>
+    <label for="email" class="text-sm font-medium text-slate-700">Email<span aria-hidden="true" class="align-super text-xs text-red-600">*</span></label>
     <input
       id="email"
       type="email"
@@ -92,13 +96,14 @@
     }
   </div>
 
+  <!-- Phone number -->
   <div class="flex flex-col gap-1">
     <label for="phoneNumber" class="text-sm font-medium text-slate-700"
-      >Phone number<span align-super text-xs text-red-600>*</span></label>
+      >Phone number<span class="align-super text-xs text-red-600">*</span></label>
     <input
       id="phoneNumber"
       type="tel"
-      autocomplete="tel-country-code"
+      autocomplete="tel"
       aria-autocomplete="inline"
       aria-required="true"
       [formField]="signupForm.phoneNumber"
@@ -113,8 +118,11 @@
     }
   </div>
 
+  <!-- Address -->
+
+  <!-- Street -->
   <div class="flex flex-col gap-1">
-    <label for="street" class="text-sm font-medium text-slate-700">Street<span aria-hidden="true" align-super text-xs text-red-600>*</span></label>
+    <label for="street" class="text-sm font-medium text-slate-700">Street<span aria-hidden="true" class="align-super text-xs text-red-600">*</span></label>
     <input
       id="street"
       type="text"
@@ -133,13 +141,14 @@
     }
   </div>
 
+  <!-- City -->
   <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
     <div class="flex flex-col gap-1">
-      <label for="city" class="text-sm font-medium text-slate-700">City<span aria-hidden="true" align-super text-xs text-red-600>*</span></label>
+      <label for="city" class="text-sm font-medium text-slate-700">City<span aria-hidden="true" class="align-super text-xs text-red-600">*</span></label>
       <input
         id="city"
         type="text"
-        autocomplete="address-level3"
+        autocomplete="address-level2"
         aria-autocomplete="inline"
         aria-required="true"
         [formField]="signupForm.city"
@@ -154,12 +163,13 @@
       }
     </div>
 
+    <!-- Ward -->
     <div class="flex flex-col gap-1">
       <label for="ward" class="text-sm font-medium text-slate-700">Ward (optional)</label>
       <input
         id="ward"
         type="text"
-        autocomplete="address-line2"
+        autocomplete="address-line3"
         aria-autocomplete="inline"
         aria-required="true"
         [formField]="signupForm.ward"
@@ -168,15 +178,16 @@
     </div>
   </div>
 
+  <!-- Local government -->
   <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
     <div class="flex flex-col gap-1">
       <label for="localGovernment" class="text-sm font-medium text-slate-700"
-        >Local government<span align-super text-xs text-red-600>*</span></label
+        >Local government<span class="align-super text-xs text-red-600">*</span></label
       >
       <input
         id="localGovernment"
         type="text"
-        autocomplete="address-level2"
+        autocomplete="address-leve2"
         aria-autocomplete="inline"
         aria-required="true"
         [formField]="signupForm.localGovernment"
@@ -193,8 +204,9 @@
       }
     </div>
 
+    <!-- State -->
     <div class="flex flex-col gap-1">
-      <label for="state" class="text-sm font-medium text-slate-700">State<span aria-hidden="true" align-super text-xs text-red-600>*</span></label>
+      <label for="state" class="text-sm font-medium text-slate-700">State<span aria-hidden="true" class="align-super text-xs text-red-600">*</span></label>
       <input
         id="state"
         type="text"
@@ -214,6 +226,7 @@
     </div>
   </div>
 
+  <!-- Zip code (optional) -->
   <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
     <div class="flex flex-col gap-1">
       <label for="zipCode" class="text-sm font-medium text-slate-700"
@@ -230,8 +243,9 @@
       />
     </div>
 
+    <!-- Country -->
     <div class="flex flex-col gap-1">
-      <label for="country" class="text-sm font-medium text-slate-700">Country<span aria-hidden="true" align-super text-xs text-red-600>*</span></label>
+      <label for="country" class="text-sm font-medium text-slate-700">Country<span aria-hidden="true" class="align-super text-xs text-red-600">*</span></label>
       <input
         id="country"
         type="text"
@@ -250,9 +264,11 @@
       }
     </div>
   </div>
+  <!-- End of address -->
 
+  <!-- Password -->
   <div class="flex flex-col gap-1">
-    <label for="password" class="text-sm font-medium text-slate-700">Password<span aria-hidden="true" align-super text-xs text-red-600>*</span></label>
+    <label for="password" class="text-sm font-medium text-slate-700">Password<span aria-hidden="true" class="align-super text-xs text-red-600">*</span></label>
     <input
       id="password"
       type="password"
@@ -271,6 +287,7 @@
     }
   </div>
 
+  <!-- Submit button -->
   <button
     type="submit"
     [disabled]="!signupForm().valid() || submitting()"
