@@ -64,11 +64,9 @@ export class SignupPage {
     this.selectedLocalGovernment.set(localGovernment);
   }
  
-  protected onSignupSubmit(value: SignupFormData): void {
+  protected onSignupSubmit(_value: SignupFormData): void {
     this.submitting.set(true);
     this.serverError.set(null);
-
-    console.log(`Signup form data from signup page: ${JSON.stringify(value, null, 2)}`);
 
     // This is the guide-aligned placeholder flow for an async auth layer:
     // loading starts, any previous server error clears, and the form UI updates
