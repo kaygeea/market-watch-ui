@@ -1,6 +1,7 @@
 import { Component, effect, input, output, signal } from '@angular/core';
 import { disabled, email, form, FormField, maxLength, minLength, PathKind, readonly, required, SchemaPath, validate } from '@angular/forms/signals';
 import { AuthServerError, SignupFormData } from './signup-form.interfaces';
+import { RouterLink } from '@angular/router';
  
 const EMPTY_SIGNUP_FORM_VALUE: SignupFormData = {
   firstName: '',
@@ -20,7 +21,7 @@ const EMPTY_SIGNUP_FORM_VALUE: SignupFormData = {
 
 @Component({
   selector: 'app-signup-form',
-  imports: [FormField],
+  imports: [RouterLink, FormField],
   templateUrl: './signup-form.component.html',
   styleUrl: './signup-form.component.css',
 })
@@ -141,7 +142,6 @@ export class SignupForm {
     if (!this.signupForm().valid()) {
       return;
     }
-    console.log(`Submitting form data: ${JSON.stringify(this.signupModel(), null, 2)}`);
     this.formSubmit.emit(this.signupModel());
   }
 }

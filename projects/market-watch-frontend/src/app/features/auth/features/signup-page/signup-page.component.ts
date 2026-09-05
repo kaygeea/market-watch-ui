@@ -3,10 +3,11 @@ import { GEO_LOCATION_PORT } from '../../data/geo/geo-location.port';
 import { StaticGeoLocationAdapter } from '../../data/geo/static-geo-location.adapter';
 import { SignupForm } from '../../ui/signup-form/signup-form.component';
 import { AuthServerError, SignupFormData } from '../../ui/signup-form/signup-form.interfaces';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-signup-page',
-  imports: [SignupForm],
+  imports: [RouterLink, SignupForm],
   templateUrl: './signup-page.component.html',
   styleUrl: './signup-page.component.css',
   providers: [{ provide: GEO_LOCATION_PORT, useClass: StaticGeoLocationAdapter }],

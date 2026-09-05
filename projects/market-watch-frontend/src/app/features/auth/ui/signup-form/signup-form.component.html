@@ -188,7 +188,7 @@
     </div>
 
     <div class="flex flex-col gap-1">
-      <label for="ward" class="text-sm font-medium text-slate-700">Ward<span aria-hidden="true" class="align-super text-xs text-red-600">*</span></label>
+      <label for="ward" class="text-sm font-medium text-slate-700">Ward</label>
       <select
         id="ward"
         [formField]="signupForm.ward"
@@ -298,6 +298,9 @@
       </ul>
     }
   </div>
+
+  <!-- Signin account -->
+  <p>Already have an account? <a routerLink="/auth/signin">Sign in</a></p>
 
   <!-- Submit button -->
   <button
