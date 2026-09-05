@@ -39,32 +39,37 @@ export class SignupForm {
   readonly localGovernmentSelected = output<string>();
   readonly formSubmit = output<SignupFormData>();
 
+  private readonly lastSelectedState = signal<string | undefined>(undefined);
+  private readonly lastSelectedLocalGovernment = signal<string | undefined>(undefined);
+
   protected readonly signupModel = signal<SignupFormData>({ ...EMPTY_SIGNUP_FORM_VALUE });
 
   constructor() {
     effect(() => {
       const state = this.signupForm.state().value();
+      const previousState = this.lastSelectedState();
 
-      if (state) {
-        this.stateSelected.emit(state);
-        if (this.signupForm.localGovernment().value()) {
-          this.signupForm.localGovernment().value.set('');
-        }
-        if (this.signupForm.ward().value()) {
-          this.signupForm.ward().value.set('');
-        }
+      if (!state || state === previousState) {
+        return;
       }
+
+      this.lastSelectedState.set(state);
+      this.stateSelected.emit(state);
+      this.signupForm.localGovernment().value.set('');
+      this.signupForm.ward().value.set('');
     });
 
     effect(() => {
       const localGovernment = this.signupForm.localGovernment().value();
+      const previousLocalGovernment = this.lastSelectedLocalGovernment();
 
-      if (localGovernment) {
-        this.localGovernmentSelected.emit(localGovernment);
-        if (this.signupForm.ward().value()) {
-          this.signupForm.ward().value.set('');
-        }
+      if (!localGovernment || localGovernment === previousLocalGovernment) {
+        return;
       }
+
+      this.lastSelectedLocalGovernment.set(localGovernment);
+      this.localGovernmentSelected.emit(localGovernment);
+      this.signupForm.ward().value.set('');
     });
   }
 
