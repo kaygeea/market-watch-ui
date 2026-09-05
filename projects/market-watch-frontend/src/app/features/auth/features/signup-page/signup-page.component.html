@@ -10,6 +10,15 @@
 } @else {
   <section class="mx-auto w-full max-w-2xl">
     <app-signup-form
+      [stateOptions]="statesResource.value() ?? []"
+      [statesLoading]="statesResource.isLoading()"
+      [localGovernmentOptions]="localGovernmentsResource.value() ?? []"
+      [localGovernmentsLoading]="localGovernmentsResource.isLoading()"
+      [wardOptions]="wardsResource.value() ?? []"
+      [wardsLoading]="wardsResource.isLoading()"
+      (stateFieldFocused)="onStateFieldFocused()"
+      (stateSelected)="onStateSelected($event)"
+      (localGovernmentSelected)="onLocalGovernmentSelected($event)"
       [submitting]="submitting()"
       [serverError]="serverError()"
       (formSubmit)="onSignupSubmit($event)"

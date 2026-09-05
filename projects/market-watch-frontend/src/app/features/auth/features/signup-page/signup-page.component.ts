@@ -1,34 +1,80 @@
-import { Component, signal } from '@angular/core';
-import { AuthServerError, SignupForm, SignupFormData } from '../../ui/signup-form/signup-form.component';
+import { Component, inject, resource, signal } from '@angular/core';
+import { GEO_LOCATION_PORT } from '../../data/geo/geo-location.port';
+import { StaticGeoLocationAdapter } from '../../data/geo/static-geo-location.adapter';
+import { SignupForm } from '../../ui/signup-form/signup-form.component';
+import { AuthServerError, SignupFormData } from '../../ui/signup-form/signup-form.interfaces';
 
 @Component({
   selector: 'app-signup-page',
   imports: [SignupForm],
   templateUrl: './signup-page.component.html',
   styleUrl: './signup-page.component.css',
+  providers: [{ provide: GEO_LOCATION_PORT, useClass: StaticGeoLocationAdapter }],
 })
 export class SignupPage {
+  private readonly geoLocationSource = inject(GEO_LOCATION_PORT);
+
   protected readonly submitting = signal(false);
   protected readonly serverError = signal<AuthServerError | null>(null);
   protected readonly registrationComplete = signal(false);
+
+  protected readonly stateFieldActivated = signal(false);
+  protected readonly selectedState = signal<string | undefined>(undefined);
+  protected readonly selectedLocalGovernment = signal<string | undefined>(undefined);
+
+  protected readonly statesResource = resource<string[], Record<string, never>>({
+    params: () => (this.stateFieldActivated() ? {} : {}),
+    loader: () => this.geoLocationSource.getStates(),
+  });
+
+  protected readonly localGovernmentsResource = resource<string[], { state: string }>({
+    params: () => ({ state: this.selectedState() ?? '' }),
+    loader: async ({ params }) => {
+      if (!params.state) {
+        return [];
+      }
+      return this.geoLocationSource.getLocalGovernments(params.state);
+    },
+  });
+
+  protected readonly wardsResource = resource<string[], { state: string; localGovernment: string }>({
+    params: () => ({
+      state: this.selectedState() ?? '',
+      localGovernment: this.selectedLocalGovernment() ?? '',
+    }),
+    loader: async ({ params }) => {
+      if (!params.state || !params.localGovernment) {
+        return [];
+      }
+      return this.geoLocationSource.getWards(params.state, params.localGovernment);
+    },
+  });
+
+  protected onStateFieldFocused(): void {
+    this.stateFieldActivated.set(true);
+  }
+
+  protected onStateSelected(state: string): void {
+    this.selectedState.set(state);
+    this.selectedLocalGovernment.set(undefined);
+  }
+
+  protected onLocalGovernmentSelected(localGovernment: string): void {
+    this.selectedLocalGovernment.set(localGovernment);
+  }
  
   protected onSignupSubmit(value: SignupFormData): void {
-    // TODO(data-layer): wire to AuthStore.register() once the data/ layer
-    // exists. AuthStore is not built this session — this handler is a
-    // deliberate stub, not a placeholder left by accident.
-    //
-    // The eventual implementation is expected to look roughly like:
-    //   this.submitting.set(true);
-    //   this.serverError.set(null);
-    //   try {
-    //     await this.authStore.register(value);
-    //     this.registrationComplete.set(true);
-    //   } catch (error) {
-    //     this.serverError.set(toAuthServerError(error));
-    //   } finally {
-    //     this.submitting.set(false);
-    //   }
+    this.submitting.set(true);
+    this.serverError.set(null);
+
     console.log(`Signup form data from signup page: ${JSON.stringify(value, null, 2)}`);
-    throw new Error('Not implemented: AuthStore.register() is not wired yet.');
+
+    // This is the guide-aligned placeholder flow for an async auth layer:
+    // loading starts, any previous server error clears, and the form UI updates
+    // from the page state once the backend integration exists.
+    setTimeout(() => {
+      this.registrationComplete.set(true);
+      this.submitting.set(false);
+    }, 250);
   }
 }
