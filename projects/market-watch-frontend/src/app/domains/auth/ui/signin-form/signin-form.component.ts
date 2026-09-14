@@ -1,23 +1,7 @@
 import { Component, input, output, signal } from '@angular/core';
-import { email, form, FormField, pattern, required } from '@angular/forms/signals';
+import { email, form, FormField, required } from '@angular/forms/signals';
 import { RouterLink } from "@angular/router";
-
-/** Matches the login request shape (no formal DTO provided in source material). */
-export interface SigninFormData {
-  email: string;
-  password: string;
-}
- 
-/**
- * Shape the future `AuthStore` will populate from the API error envelope's
- * `error: { name, message }`. This component renders whatever it is given —
- * it does not special-case "unverified email" vs. other failures. That
- * distinction belongs to whatever populates this signal later.
- */
-export interface AuthServerError {
-  name: string;
-  message: string;
-}
+import { AuthError, LoginCredentials } from '../../utils/models/auth.model';
 
 @Component({
   selector: 'app-signin-form',
@@ -27,10 +11,10 @@ export interface AuthServerError {
 })
 export class SigninForm {
   readonly submitting = input<boolean>(false);
-  readonly serverError = input<AuthServerError | null>(null);
-  readonly formSubmit = output<SigninFormData>();
+  readonly serverError = input<AuthError | null>(null);
+  readonly formSubmit = output<LoginCredentials>();
  
-  protected readonly model = signal<SigninFormData>({ email: '', password: '' });
+  protected readonly model = signal<LoginCredentials>({ email: '', password: '' });
  
   protected readonly signinForm = form(this.model, (path) => {
     required(path.email, { message: 'Email is required' });

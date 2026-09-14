@@ -1,10 +1,14 @@
-/**
- * Mirrors `RegisterNewUserRequestDto` (market-watch-api, IAM module) field
- * for field. This type is intentionally colocated here rather than in
- * `data/` — the DTO/mapper layer is deferred to the AuthStore session.
- * When `data/` is built, reconcile this with the real DTO import instead
- * of duplicating it further.
- */
+export interface User {
+  id: string;
+  email: string;
+  role: string;
+  status: string;
+};
+
+export interface LoginCredentials {
+  email: string;
+  password: string;
+}
 
 export interface SignupAddress {
   country: string;
@@ -16,7 +20,7 @@ export interface SignupAddress {
   zipCode: string;
 }
 
-export interface SignupFormData {
+export interface RegisterPayload {
   firstName: string;
   lastName: string;
   middleName: string;
@@ -26,8 +30,14 @@ export interface SignupFormData {
   password: string;
 }
 
+export interface AuthResponse {
+  accessToken: string;
+  refreshToken: string;
+  user: User;
+}
+
 /** Shape the future `AuthStore` will populate from the API error envelope. */
-export interface AuthServerError {
+export interface AuthError {
   name: string;
   message: string;
 }

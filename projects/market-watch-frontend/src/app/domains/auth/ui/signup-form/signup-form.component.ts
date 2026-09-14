@@ -1,9 +1,9 @@
 import { Component, effect, input, output, signal } from '@angular/core';
 import { disabled, email, form, FormField, maxLength, minLength, PathKind, readonly, required, SchemaPath, validate } from '@angular/forms/signals';
-import { AuthServerError, SignupFormData } from './signup-form.interfaces';
 import { RouterLink } from '@angular/router';
+import { AuthError, RegisterPayload } from '../../utils/models/auth.model';
  
-const EMPTY_SIGNUP_FORM_VALUE: SignupFormData = {
+const EMPTY_SIGNUP_FORM_VALUE: RegisterPayload = {
   firstName: '',
   lastName: '',
   middleName: '',
@@ -29,7 +29,7 @@ const EMPTY_SIGNUP_FORM_VALUE: SignupFormData = {
 })
 export class SignupForm {
   readonly submitting = input<boolean>(false);
-  readonly serverError = input<AuthServerError | null>(null);
+  readonly serverError = input<AuthError | null>(null);
   readonly stateOptions = input<string[]>([]);
   readonly statesLoading = input<boolean>(false);
   readonly localGovernmentOptions = input<string[]>([]);
@@ -40,12 +40,12 @@ export class SignupForm {
   readonly stateFieldFocused = output<void>();
   readonly stateSelected = output<string>();
   readonly localGovernmentSelected = output<string>();
-  readonly formSubmit = output<SignupFormData>();
+  readonly formSubmit = output<RegisterPayload>();
 
   private readonly lastSelectedState = signal<string | undefined>(undefined);
   private readonly lastSelectedLocalGovernment = signal<string | undefined>(undefined);
 
-  protected readonly signupModel = signal<SignupFormData>({ ...EMPTY_SIGNUP_FORM_VALUE });
+  protected readonly signupModel = signal<RegisterPayload>({ ...EMPTY_SIGNUP_FORM_VALUE });
 
   constructor() {
     effect(() => {
