@@ -1,6 +1,4 @@
 import { Routes } from '@angular/router';
-import { SignupPage } from './domains/auth/features/signup-page/signup-page.component';
-import { SigninPage } from './domains/auth/features/signin-page/signin-page.component';
 
 export const routes: Routes = [
   {
@@ -8,11 +6,11 @@ export const routes: Routes = [
     children: [
       {
         path: 'signup',
-        component: SignupPage,
+        loadComponent: () => import('./domains/auth/features/signup-page/signup-page.component').then((module) => module.SignupPage),
       },
       {
         path: 'signin',
-        component: SigninPage,
+        loadComponent: () => import('./domains/auth/features/signin-page/signin-page.component').then((module) => module.SigninPage),
       }
     ],
   }
