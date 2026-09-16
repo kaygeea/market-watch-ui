@@ -2,8 +2,9 @@ import { Component, inject, resource, signal } from '@angular/core';
 import { GEO_LOCATION_PORT } from '../../data/geo/geo-location.port';
 import { StaticGeoLocationAdapter } from '../../data/geo/static-geo-location.adapter';
 import { SignupForm } from '../../ui/signup-form/signup-form.component';
-import { AuthServerError, SignupFormData } from '../../ui/signup-form/signup-form.interfaces';
 import { RouterLink } from '@angular/router';
+import { RegisterPayload } from '../../utils/models/auth.model';
+import { AuthStore } from '../../data/auth-store/auth.store';
 
 @Component({
   selector: 'app-signup-page',
@@ -13,11 +14,8 @@ import { RouterLink } from '@angular/router';
   providers: [{ provide: GEO_LOCATION_PORT, useClass: StaticGeoLocationAdapter }],
 })
 export class SignupPage {
+  protected readonly authStore = inject(AuthStore);
   private readonly geoLocationSource = inject(GEO_LOCATION_PORT);
-
-  protected readonly submitting = signal(false);
-  protected readonly serverError = signal<AuthServerError | null>(null);
-  protected readonly registrationComplete = signal(false);
 
   protected readonly stateFieldActivated = signal(false);
   protected readonly selectedState = signal<string | undefined>(undefined);
@@ -64,16 +62,7 @@ export class SignupPage {
     this.selectedLocalGovernment.set(localGovernment);
   }
  
-  protected onSignupSubmit(_value: SignupFormData): void {
-    this.submitting.set(true);
-    this.serverError.set(null);
-
-    // This is the guide-aligned placeholder flow for an async auth layer:
-    // loading starts, any previous server error clears, and the form UI updates
-    // from the page state once the backend integration exists.
-    setTimeout(() => {
-      this.registrationComplete.set(true);
-      this.submitting.set(false);
-    }, 250);
+  protected onSignupSubmit(value: RegisterPayload): void {
+    this.authStore.register(value)
   }
 }
