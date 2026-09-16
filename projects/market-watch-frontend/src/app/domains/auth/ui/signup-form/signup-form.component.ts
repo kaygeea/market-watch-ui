@@ -29,7 +29,7 @@ const EMPTY_SIGNUP_FORM_VALUE: RegisterPayload = {
 })
 export class SignupForm {
   readonly submitting = input<boolean>(false);
-  readonly serverError = input<AuthError | null>(null);
+  readonly serverError = input<string | null>(null);
   readonly stateOptions = input<string[]>([]);
   readonly statesLoading = input<boolean>(false);
   readonly localGovernmentOptions = input<string[]>([]);
