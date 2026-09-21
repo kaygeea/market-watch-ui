@@ -1,7 +1,7 @@
 import { Component, input, output, signal } from '@angular/core';
 import { email, form, FormField, required } from '@angular/forms/signals';
 import { RouterLink } from "@angular/router";
-import { AuthError, LoginCredentials } from '../../utils/models/auth.model';
+import { LoginCredentials } from '../../utils/models/auth.model';
 
 @Component({
   selector: 'app-signin-form',
@@ -11,8 +11,9 @@ import { AuthError, LoginCredentials } from '../../utils/models/auth.model';
 })
 export class SigninForm {
   readonly submitting = input<boolean>(false);
-  readonly serverError = input<AuthError | null>(null);
+  readonly serverError = input<string | null>(null);
   readonly formSubmit = output<LoginCredentials>();
+  readonly signOut = output();
  
   protected readonly model = signal<LoginCredentials>({ email: '', password: '' });
  

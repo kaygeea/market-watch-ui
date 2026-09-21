@@ -31,13 +31,25 @@ export interface RegisterPayload {
 }
 
 export interface AuthResponse {
-  accessToken: string;
-  refreshToken: string;
-  user: User;
+  success: boolean;
+  statusCode: number;
+  message: string;
+  data: {
+    accessToken: string;
+    refreshToken: string;
+    user: User
+  }
+  timestamp: string;
 }
 
 /** Shape the future `AuthStore` will populate from the API error envelope. */
 export interface AuthError {
-  name: string;
+  success: boolean;
+  statusCode: number;
   message: string;
+  data: null;
+  timestamp: string;
+  error: {
+    name: string;
+  }
 }
