@@ -1,0 +1,24 @@
+@if (authStore.isAuthenticated()) {
+  <section class="mx-auto w-full max-w-2xl">
+    <div class="flex flex-col items-center gap-3 py-10 text-center" role="status">
+      <h2 class="text-xl font-semibold text-slate-900">Welcome {{ authStore.user()?.email }}</h2>
+      <p class="max-w-sm text-slate-600">
+        You are logged in as: {{ authStore.user() }}
+      </p>
+      <button
+        type="button"
+        class="mt-2 rounded-md bg-slate-900 px-4 py-2 font-medium text-white"
+      >
+        Sign out
+      </button>
+    </div>
+  </section>
+} @else {
+  <section class="mx-auto w-full max-w-md">
+  <app-signin-form
+    [submitting]="authStore.isLoading()"
+    [serverError]="authStore.error()"
+    (formSubmit)="onSigninSubmit($event)"
+  />
+</section>
+}
