@@ -1,10 +1,10 @@
 import { Component, inject, resource, signal } from '@angular/core';
-import { GEO_LOCATION_PORT } from '../../data/geo/geo-location.port';
-import { StaticGeoLocationAdapter } from '../../data/geo/static-geo-location.adapter';
-import { SignupForm } from '../../ui/signup-form/signup-form.component';
+import { GEO_LOCATION_PORT } from '../../../auth/data/geo/geo-location.port';
+import { StaticGeoLocationAdapter } from '../../../auth/data/geo/static-geo-location.adapter';
+import { SignupForm } from '../../../auth/ui/signup-form/signup-form.component';
 import { RouterLink } from '@angular/router';
-import { RegisterPayload } from '../../utils/models/auth.model';
-import { AuthStore } from '../../data/auth-store/auth.store';
+import { RegisterPayload } from '../../../auth/utils/models/auth.model';
+import { AuthStore } from '../../../auth/data/auth-store/auth.store';
 
 @Component({
   selector: 'app-signup-page',

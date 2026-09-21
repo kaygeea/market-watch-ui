@@ -6,7 +6,7 @@ export const routes: Routes = [
     children: [
       {
         path: 'signup',
-        loadComponent: () => import('./domains/auth/features/signup-page/signup-page.component').then((module) => module.SignupPage),
+        loadComponent: () => import('./domains/users/features/signup-page/signup-page.component').then((module) => module.SignupPage),
       },
       {
         path: 'signin',
