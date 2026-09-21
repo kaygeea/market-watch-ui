@@ -1,7 +1,7 @@
 import { Component, effect, input, output, signal } from '@angular/core';
 import { disabled, email, form, FormField, maxLength, minLength, PathKind, readonly, required, SchemaPath, validate } from '@angular/forms/signals';
 import { RouterLink } from '@angular/router';
-import { AuthError, RegisterPayload } from '../../utils/models/auth.model';
+import { RegisterPayload } from '../../../auth/utils/models/auth.model';
  
 const EMPTY_SIGNUP_FORM_VALUE: RegisterPayload = {
   firstName: '',

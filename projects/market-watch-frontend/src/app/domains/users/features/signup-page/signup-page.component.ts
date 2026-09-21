@@ -1,7 +1,7 @@
 import { Component, inject, resource, signal } from '@angular/core';
 import { GEO_LOCATION_PORT } from '../../../auth/data/geo/geo-location.port';
 import { StaticGeoLocationAdapter } from '../../../auth/data/geo/static-geo-location.adapter';
-import { SignupForm } from '../../../auth/ui/signup-form/signup-form.component';
+import { SignupForm } from '../../ui/signup-form/signup-form.component';
 import { RouterLink } from '@angular/router';
 import { RegisterPayload } from '../../../auth/utils/models/auth.model';
 import { AuthStore } from '../../../auth/data/auth-store/auth.store';
