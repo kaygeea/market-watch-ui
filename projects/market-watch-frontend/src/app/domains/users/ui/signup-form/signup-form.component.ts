@@ -1,9 +1,9 @@
 import { Component, effect, input, output, signal } from '@angular/core';
 import { disabled, email, form, FormField, maxLength, minLength, PathKind, readonly, required, SchemaPath, validate } from '@angular/forms/signals';
 import { RouterLink } from '@angular/router';
-import { RegisterPayload } from '../../../auth/utils/models/auth.model';
+import { UserRegistrationPayload } from '../../utils/user.model';
  
-const EMPTY_SIGNUP_FORM_VALUE: RegisterPayload = {
+const EMPTY_SIGNUP_FORM_VALUE: UserRegistrationPayload = {
   firstName: '',
   lastName: '',
   middleName: '',
@@ -17,6 +17,8 @@ const EMPTY_SIGNUP_FORM_VALUE: RegisterPayload = {
     city: '',
     street: '',
     zipCode: '',
+    longitude: '',
+    latitude: '',
   },
   password: '',
 };
@@ -40,12 +42,12 @@ export class SignupForm {
   readonly stateFieldFocused = output<void>();
   readonly stateSelected = output<string>();
   readonly localGovernmentSelected = output<string>();
-  readonly formSubmit = output<RegisterPayload>();
+  readonly formSubmit = output<UserRegistrationPayload>();
 
   private readonly lastSelectedState = signal<string | undefined>(undefined);
   private readonly lastSelectedLocalGovernment = signal<string | undefined>(undefined);
 
-  protected readonly signupModel = signal<RegisterPayload>({ ...EMPTY_SIGNUP_FORM_VALUE });
+  protected readonly signupModel = signal<UserRegistrationPayload>({ ...EMPTY_SIGNUP_FORM_VALUE });
 
   constructor() {
     effect(() => {
