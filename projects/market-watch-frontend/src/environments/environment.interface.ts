@@ -1,6 +1,4 @@
-export interface IEnvironment {
- production: boolean;
- apiBaseUrl: string;
- registerEndpoint: string;
- signinEndpoint: string;
+export interface Environment {
+  readonly production: boolean;
+  readonly apiBaseUrl: string;
 }
