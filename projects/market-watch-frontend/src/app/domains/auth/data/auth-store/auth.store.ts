@@ -14,7 +14,6 @@ import { AuthStatus, AuthStatusEnum } from '../../utils/models/auth.interface';
 import {
   AuthError,
   LoginCredentials,
-  RegisterPayload,
   User,
 } from '../../utils/models/auth.model';
 import { AuthService } from './auth.service';
@@ -72,32 +71,6 @@ export const AuthStore = signalStore(
                   patchState(store, {
                     status: AuthStatusEnum.ERROR,
                     error: err.message || 'Login failed. Please check your credentials.',
-                  });
-                },
-              }),
-            ),
-          ),
-        ),
-      ),
-
-      register: rxMethod<RegisterPayload>(
-        pipe(
-          tap(() =>
-            patchState(store, { status: AuthStatusEnum.AUTHENTICATING, error: null }),
-          ),
-          switchMap((payload) =>
-            authService.register(payload).pipe(
-              tapResponse({
-                next: () => {
-                  patchState(store, {
-                    status: AuthStatusEnum.AUTHENTICATED,
-                    error: null,
-                  });
-                },
-                error: (err: AuthError) => {
-                  patchState(store, {
-                    status: AuthStatusEnum.ERROR,
-                    error: err.message || 'Registration failed. Please try again.',
                   });
                 },
               }),
