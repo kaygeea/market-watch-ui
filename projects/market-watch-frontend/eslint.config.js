@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'eslint/config';
 import rootConfig from '../../eslint.config.mts';
+import { configs } from '@softarc/eslint-plugin-sheriff';
 
 export default defineConfig([
   ...rootConfig,
@@ -11,7 +12,7 @@ export default defineConfig([
         'error',
         {
           type: 'attribute',
-          prefix: 'mw-frontend',
+          prefix: 'app',
           style: 'camelCase',
         },
       ],
@@ -19,7 +20,7 @@ export default defineConfig([
         'error',
         {
           type: 'element',
-          prefix: 'mw-frontend',
+          prefix: 'app',
           style: 'kebab-case',
         },
       ],
@@ -28,5 +29,9 @@ export default defineConfig([
   {
     files: ['**/*.html'],
     rules: {},
+  },
+  {
+    files: ['**/*.ts'],
+    extends: [configs.all],
   },
 ]);

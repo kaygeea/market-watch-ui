@@ -4,46 +4,47 @@ import tseslint from "typescript-eslint";
 import json from "@eslint/json";
 import markdown from "@eslint/markdown";
 import css from "@eslint/css";
+import prettier from 'eslint-config-prettier';
 import { defineConfig } from "eslint/config";
 import * as angular from "angular-eslint";
 
 export default defineConfig([
   {
     rules: {},
-    files: ["**/*.{js,mjs,cjs,ts,mts,cts}"],
+    files: ['**/*.{js,mjs,cjs,ts,mts,cts}'],
     plugins: { js },
-    extends: [
-      "js/recommended",
-      "prettier",
-    ],
-    languageOptions: { 
+    extends: ['js/recommended', prettier],
+    languageOptions: {
       globals: {
         ...globals.browser,
-        ...globals.node
-      }
-    }
+        ...globals.node,
+      },
+    },
   },
   tseslint.configs.recommended,
   {
-    files: ["**/*.json"],
+    files: ['**/*.json'],
     plugins: { json },
-    language: "json/json",
-    extends: ["json/recommended"]
+    language: 'json/json',
+    extends: ['json/recommended'],
   },
-  { files: ["**/*.md"],
+  {
+    files: ['**/*.md'],
     plugins: { markdown },
-    language: "markdown/gfm",
-    extends: ["markdown/recommended"]
+    language: 'markdown/gfm',
+    extends: ['markdown/recommended'],
   },
-  { files: ["**/*.css"],
+  {
+    files: ['**/*.css'],
     plugins: { css },
-    language: "css/css",
-    extends: ["css/recommended"]
+    language: 'css/css',
+    extends: ['css/recommended'],
   },
   {
     files: ['**/*.ts'],
     extends: [
       tseslint.configs.recommended,
+      tseslint.configs.strict,
       tseslint.configs.stylistic,
       angular.configs.tsRecommended,
     ],
@@ -52,10 +53,7 @@ export default defineConfig([
   },
   {
     files: ['**/*.html'],
-    extends: [
-      angular.configs.templateRecommended,
-      angular.configs.templateAccessibility
-    ],
+    extends: [angular.configs.templateRecommended, angular.configs.templateAccessibility],
     rules: {},
   },
 ]);

@@ -1,0 +1,30 @@
+<section class="mx-auto w-full max-w-md">
+  @if (submissionSucceeded()) {
+    <p
+      role="status"
+      class="mb-4 rounded-md border border-green-300 bg-green-50 p-3 text-sm text-green-900"
+    >
+      Address saved successfully.
+    </p>
+  } @else {
+    <app-address-submission-form
+      [submitting]="isSubmitting()"
+      [serverError]="serverError()"
+      (stateFieldActivated)="onStateFieldActivated()"
+      (stateValueChanged)="onStateValueChanged($event)"
+      [statesLoading]="statesResource.isLoading()"
+      [stateOptions]="statesResource.hasValue() ? statesResource.value() : []"
+      (localGovernmentValueChanged)="onLocalGovernmentValueChanged($event)"
+      [localGovernmentsLoading]="localGovernmentsResource.isLoading()"
+      [localGovernmentOptions]="
+        localGovernmentsResource.hasValue() ? localGovernmentsResource.value() : []
+      "
+      [wardsLoading]="lgaWardsResource.isLoading()"
+      [wardOptions]="lgaWardsResource.value().data.wardsWithCoordinates"
+      [longitude]="selectedWard()?.longitude ?? null"
+      [latitude]="selectedWard()?.latitude ?? null"
+      (wardValueChanged)="onWardValueChanged($event)"
+      (formSubmit)="onAddressFormSubmit($event)"
+    />
+  }
+</section>

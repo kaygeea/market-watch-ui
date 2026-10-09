@@ -1,5 +1,5 @@
 import { inject, Service } from '@angular/core';
-import { LocalStorageService } from '../../../../shared/local-storage-service/local-storage.service';
+import { LocalStorageService } from '../../../../shared/data-access/local-storage-service/local-storage.service';
 
 @Service()
 export class TokenStorage {
