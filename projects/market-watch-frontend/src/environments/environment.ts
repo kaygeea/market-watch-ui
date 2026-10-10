@@ -1,8 +1,6 @@
-import { IEnvironment } from "./environment.interface";
+import { Environment } from './environment.interface';
 
-export const environment: IEnvironment = {
+export const environment = {
   production: true,
   apiBaseUrl: '',
-  registerEndpoint: '/api/v1/identity/users',
-  signinEndpoint: '/api/v1/auth/login',
-};
+} satisfies Environment;

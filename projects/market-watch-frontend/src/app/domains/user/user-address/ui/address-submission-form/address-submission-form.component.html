@@ -1,0 +1,253 @@
+<form novalidate (submit)="onSubmit($event)" class="flex flex-col gap-5">
+  @if (serverError(); as error) {
+    <p
+      role="alert"
+      class="rounded-md border border-red-300 bg-red-50 p-3 text-sm text-red-900"
+    >
+      {{ error }}
+    </p>
+  }
+
+  <!-- Address Label -->
+  <div class="grid grid-cols-1 gap-4">
+    <div class="flex flex-col gap-1">
+      <label for="zipCode" class="text-sm font-medium text-slate-700"
+        >Label<span aria-hidden="true" class="align-super text-xs text-red-600"
+          >*</span
+        ></label
+      >
+      <input
+        id="formLabel"
+        type="text"
+        aria-required="true"
+        placeholder="My family home"
+        [formField]="userAddressForm.label"
+        class="rounded-md border border-slate-300 px-3 py-2"
+      />
+    </div>
+  </div>
+
+  <!-- Address start -->
+
+  <!-- Country and state -->
+  <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+    <div class="flex flex-col gap-1">
+      <label for="country" class="text-sm font-medium text-slate-700"
+        >Country<span aria-hidden="true" class="align-super text-xs text-red-600"
+          >*</span
+        ></label
+      >
+      <div
+        id="country"
+        class="w-full rounded-md border border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-700"
+      >
+        {{ userAddressForm.country().value() }}
+      </div>
+      @if (userAddressForm.country().touched() && userAddressForm.country().invalid()) {
+        <ul class="text-sm text-red-600">
+          @for (error of userAddressForm.country().errors(); track error.kind) {
+            <li>{{ error.message }}</li>
+          }
+        </ul>
+      }
+    </div>
+
+    <div class="flex flex-col gap-1">
+      <label for="state" class="text-sm font-medium text-slate-700"
+        >State<span aria-hidden="true" class="align-super text-xs text-red-600"
+          >*</span
+        ></label
+      >
+      <select
+        id="state"
+        type="select-one"
+        autocomplete="address-level1"
+        [formField]="userAddressForm.state"
+        (focus)="stateFieldActivated.emit()"
+        (change)="onStateChange($event)"
+        class="w-full rounded-md border border-slate-300 px-3 py-2"
+      >
+        <option selected value="" disabled>
+          {{ statesLoading() ? 'Loading states…' : 'Select a state' }}
+        </option>
+        @for (state of stateOptions(); track state) {
+          <option [value]="state">{{ state }}</option>
+        }
+      </select>
+      @if (userAddressForm.state().touched() && userAddressForm.state().invalid()) {
+        <ul class="text-sm text-red-600">
+          @for (error of userAddressForm.state().errors(); track error.kind) {
+            <li>{{ error.message }}</li>
+          }
+        </ul>
+      }
+    </div>
+  </div>
+
+  <!-- Local government and ward -->
+  <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+    <div class="flex flex-col gap-1">
+      <label for="localGovernment" class="text-sm font-medium text-slate-700"
+        >Local government<span class="align-super text-xs text-red-600">*</span></label
+      >
+      <select
+        id="localGovernment"
+        type="select-one"
+        (change)="onLocalGovernmentChange($event)"
+        [formField]="userAddressForm.localGovernment"
+        class="w-full rounded-md border border-slate-300 px-3 py-2"
+      >
+        <option value="" disabled>
+          {{
+            localGovernmentsLoading()
+              ? 'Loading local governments…'
+              : 'Select a local government'
+          }}
+        </option>
+        @for (localGovernment of localGovernmentOptions(); track localGovernment) {
+          <option [value]="localGovernment">{{ localGovernment }}</option>
+        }
+      </select>
+      @if (
+        userAddressForm.localGovernment().touched() &&
+        userAddressForm.localGovernment().invalid()
+      ) {
+        <ul class="text-sm text-red-600">
+          @for (error of userAddressForm.localGovernment().errors(); track error.kind) {
+            <li>{{ error.message }}</li>
+          }
+        </ul>
+      }
+    </div>
+
+    <div class="flex flex-col gap-1">
+      <label for="ward" class="text-sm font-medium text-slate-700">Ward</label>
+      <select
+        id="ward"
+        autocomplete="address-level3"
+        [formField]="userAddressForm.ward"
+        (change)="onWardChange($event)"
+        class="w-full rounded-md border border-slate-300 px-3 py-2"
+      >
+        <option value="" disabled>
+          {{ wardsLoading() ? 'Loading wards…' : 'Select a ward' }}
+        </option>
+        @for (ward of wardOptions(); track ward.name) {
+          <option [value]="ward.name">{{ ward.name.trim() }}</option>
+        }
+      </select>
+      @if (userAddressForm.ward().touched() && userAddressForm.ward().invalid()) {
+        <ul class="text-sm text-red-600">
+          @for (error of userAddressForm.ward().errors(); track error.kind) {
+            <li>{{ error.message }}</li>
+          }
+        </ul>
+      }
+    </div>
+  </div>
+
+  <!-- City and street -->
+  <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+    <div class="flex flex-col gap-1">
+      <label for="city" class="text-sm font-medium text-slate-700"
+        >City<span aria-hidden="true" class="align-super text-xs text-red-600"
+          >*</span
+        ></label
+      >
+      <input
+        id="city"
+        type="text"
+        autocomplete="address-level2"
+        aria-autocomplete="inline"
+        aria-required="true"
+        [formField]="userAddressForm.city"
+        class="w-full rounded-md border border-slate-300 px-3 py-2"
+      />
+      @if (userAddressForm.city().touched() && userAddressForm.city().invalid()) {
+        <ul class="text-sm text-red-600">
+          @for (error of userAddressForm.city().errors(); track error.kind) {
+            <li>{{ error.message }}</li>
+          }
+        </ul>
+      }
+    </div>
+
+    <div class="flex flex-col gap-1">
+      <label for="street" class="text-sm font-medium text-slate-700"
+        >Street<span aria-hidden="true" class="align-super text-xs text-red-600"
+          >*</span
+        ></label
+      >
+      <input
+        id="street"
+        type="text"
+        autocomplete="address-line1"
+        aria-autocomplete="inline"
+        aria-required="true"
+        [formField]="userAddressForm.street"
+        class="rounded-md border border-slate-300 px-3 py-2"
+      />
+      @if (userAddressForm.street().touched() && userAddressForm.street().invalid()) {
+        <ul class="text-sm text-red-600">
+          @for (error of userAddressForm.street().errors(); track error.kind) {
+            <li>{{ error.message }}</li>
+          }
+        </ul>
+      }
+    </div>
+  </div>
+
+  <!-- Zip code (optional) -->
+  <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <div class="flex flex-col gap-1">
+      <label for="zipCode" class="text-sm font-medium text-slate-700"
+        >Zip code (optional)</label
+      >
+      <input
+        id="zipCode"
+        type="text"
+        inputmode="numeric"
+        autocomplete="postal-code"
+        aria-required="false"
+        [formField]="userAddressForm.zipCode"
+        class="rounded-md border border-slate-300 px-3 py-2"
+      />
+    </div>
+  </div>
+
+  <!-- Longitude and Latitude -->
+  <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+    <div class="flex flex-col gap-1">
+      <label for="longitude" class="text-sm font-medium text-slate-700">Longitude</label>
+      <input
+        id="longitude"
+        type="number"
+        aria-required="false"
+        [formField]="userAddressForm.longitude"
+        class="w-full rounded-md border border-slate-300 bg-slate-50 px-3 py-2"
+      />
+    </div>
+
+    <div class="flex flex-col gap-1">
+      <label for="latitude" class="text-sm font-medium text-slate-700">Latitude</label>
+      <input
+        id="latitude"
+        type="number"
+        aria-required="false"
+        [formField]="userAddressForm.latitude"
+        class="rounded-md border border-slate-300 bg-slate-50 px-3 py-2"
+      />
+    </div>
+  </div>
+
+  <!-- Submit button -->
+  <button
+    type="submit"
+    [disabled]="!userAddressForm().valid() || submitting()"
+    class="mt-2 rounded-md bg-slate-900 px-4 py-2 font-medium text-white disabled:cursor-not-allowed disabled:opacity-50"
+  >
+    {{ submitting() ? 'Submitting…' : 'Submit' }}
+  </button>
+
+  <!-- Address end -->
+</form>

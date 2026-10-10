@@ -8,7 +8,11 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "format:frontend": "prettier --write projects/market-watch-frontend",
+    "format:frontend:check": "prettier --check projects/market-watch-frontend"
   },
   "private": true,
   "packageManager": "bun@1.3.14",
@@ -36,6 +40,8 @@
     "@eslint/js": "^10.0.1",
     "@eslint/json": "^2.0.0",
     "@eslint/markdown": "^8.0.2",
+    "@softarc/eslint-plugin-sheriff": "^0.19.6",
+    "@softarc/sheriff-core": "^0.19.6",
     "@tailwindcss/postcss": "^4.1.12",
     "angular-eslint": "^22.0.0",
     "eslint": "^10.5.0",
